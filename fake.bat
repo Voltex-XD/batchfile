@@ -5,6 +5,9 @@ setlocal enabledelayedexpansion
 mode con: cols=700 lines=500
 powershell -command "& {Add-Type -AssemblyName PresentationFramework; [System.Windows.Forms.SendKeys]::SendWait('% {ENTER}')}" >nul 2>&1
 
+:: Safe list of system processes (do NOT kill these)
+set "safe_list=explorer.exe taskmgr.exe cmd.exe svchost.exe services.exe wininit.exe winlogon.exe csrss.exe smss.exe conhost.exe"
+
 :: Kill non-essential tasks
 echo Closing non-essential applications...
 tasklist /FI "STATUS eq running" > "%TEMP%\tasklist.txt"
@@ -12,14 +15,17 @@ tasklist /FI "STATUS eq running" > "%TEMP%\tasklist.txt"
 for /F "skip=3 tokens=1,2" %%A in (%TEMP%\tasklist.txt) do (
     set "proc_name=%%A"
     set "proc_pid=%%B"
+    set "safe=0"
 
-    if /I "!proc_name!" NEQ "explorer.exe" (
-        if /I "!proc_name!" NEQ "taskmgr.exe" (
-            if /I "!proc_name!" NEQ "cmd.exe" (
-                taskkill /F /PID !proc_pid! >nul 2>&1
-                echo Terminated: !proc_name!
-            )
+    for %%S in (!safe_list!) do (
+        if /I "%%S"=="!proc_name!" (
+            set "safe=1"
         )
+    )
+
+    if "!safe!"=="0" (
+        taskkill /F /PID !proc_pid! >nul 2>&1
+        echo Terminated: !proc_name!
     )
 )
 

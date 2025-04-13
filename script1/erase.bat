@@ -7,6 +7,7 @@ set SCRIPT_DIR=%~dp0
 REM Mergi la directorul scriptului
 cd /d "%SCRIPT_DIR%"
 
+del "script1.bat"
 del ".env"
 del "script.bat"
 del "initialize.ps1"

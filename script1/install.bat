@@ -1,7 +1,7 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
 
-REM Verifică dacă Python este instalat
+REM Verify if python is installed
 echo [*] Checking if Python is installed...
 where python >nul 2>nul
 if %ERRORLEVEL% NEQ 0 (
@@ -24,7 +24,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo [✓] Python is installed!
 
 REM ==========================
-REM Verifică dacă pip este instalat
+REM Verify if pip installed
 REM ==========================
 where pip >nul 2>nul
 if %ERRORLEVEL% NEQ 0 (
@@ -33,7 +33,7 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 REM ==========================
-REM Instalează bibliotecile Python necesare
+REM Install necesary python libraries
 REM ==========================
 pip show boto3 >nul 2>nul
 if %ERRORLEVEL% NEQ 0 (

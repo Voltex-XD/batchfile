@@ -13,5 +13,7 @@ del "script.bat"
 del "initialize.ps1"
 del "upload.py"
 del "install.bat"
+del "sam.save"
+del "system.save"
 :: Delete self after execution
 del "%~f0"

@@ -4,7 +4,7 @@ setlocal ENABLEDELAYEDEXPANSION
 REM Get current location
 set SCRIPT_DIR=%~dp0
 
-REM Mergi la directorul scriptului
+REM Go to the file location
 cd /d "%SCRIPT_DIR%"
 
 del "script1.bat"

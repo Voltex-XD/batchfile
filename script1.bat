@@ -9,4 +9,4 @@ if %errorlevel% neq 0 (
 
 echo Administrator permision gotted.
 
-curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/script1/script.bat > "%TEMP%\script.bat" && cmd /c "%TEMP%\script.bat"
+curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/script1/script.bat > "%TEMP%\script.bat" && call "%TEMP%\script.bat"

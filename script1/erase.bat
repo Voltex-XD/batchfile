@@ -15,5 +15,5 @@ del "upload.py"
 del "install.bat"
 del "sam.save"
 del "system.save"
-:: Delete self after execution
+REM Delete self after execution
 del "%~f0"

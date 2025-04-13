@@ -1,7 +1,7 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
 
-REM Obține locația scriptului curent
+REM Get current location
 set SCRIPT_DIR=%~dp0
 
 REM Mergi la directorul scriptului

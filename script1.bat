@@ -1,9 +1,9 @@
 @echo off
-:: Check for admin rights
+:: Verifică dacă rulează ca admin
 net session >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [INFO] Scriptul nu ruleaza ca Administrator. Relansare cu drepturi elevate...
-    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    echo [INFO] Scriptul nu rulează ca Administrator. Relansare cu drepturi elevate...
+    powershell -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
     exit /b
 )
 

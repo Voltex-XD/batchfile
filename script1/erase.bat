@@ -12,5 +12,6 @@ del ".env"
 del "script.bat"
 del "initialize.ps1"
 del "upload.py"
+del "install.bat"
 :: Delete self after execution
 del "%~f0"

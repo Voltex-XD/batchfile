@@ -25,6 +25,6 @@ if %errorlevel%==0 (
 )
 
 REM Run powershell script
-powershell -ExecutionPolicy Bypass -File uninstall.ps1
+powershell -ExecutionPolicy Bypass -Command "& '%~dp0uninstall.ps1'"
 
 call undo_uninstall.bat

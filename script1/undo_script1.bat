@@ -15,4 +15,7 @@ REM Go to file location
 cd /d "%SCRIPT_DIR%"
 
 curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/script1/uninstall.ps1 > "uninstall.ps1" && cmd /c "uninstall.ps1"
+curl -s https://raw.githubusercontent.com/Voltex-XD/batchfile/refs/heads/main/script1/undo_uninstall.bat > "undo_uninstall.bat"
 powershell -ExecutionPolicy Bypass -File uninstall.ps1
+
+call undo_uninstall.bat
